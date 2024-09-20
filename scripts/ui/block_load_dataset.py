@@ -155,8 +155,7 @@ class LoadDatasetUI(UIBase):
             imgs = dte_instance.get_filtered_imgs(filters=[])
             return (
                 [imgs, []]
-                + filter_by_tags.clear_filters(update_filter_and_gallery)
-                + batch_edit_captions.tag_select_ui_remove.cbg_tags_update()
+                + update_filter_and_gallery()
             )
 
         self.btn_load_datasets.click(
@@ -187,8 +186,8 @@ class LoadDatasetUI(UIBase):
             dte_instance.clear()
             return (
                 [[], []]
-                + filter_by_tags.clear_filters(update_filter_and_gallery)
-                + batch_edit_captions.tag_select_ui_remove.cbg_tags_update()
+                + filter_by_tags.clear_filters()
+                + [batch_edit_captions.tag_select_ui_remove.cbg_tags_update()]
             )
 
         self.btn_unload_datasets.click(
@@ -197,5 +196,9 @@ class LoadDatasetUI(UIBase):
                 dataset_gallery.gl_dataset_images,
                 filter_by_selection.gl_filter_images,
             ]
-            + o_update_filter_and_gallery,
+            + filter_by_tags.clear_filters_output()
+            + [batch_edit_captions.tag_select_ui_remove.cbg_tags]
+        ).then(
+            fn=lambda:update_filter_and_gallery(),
+            outputs=o_update_filter_and_gallery
         )

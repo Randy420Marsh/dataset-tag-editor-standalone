@@ -31,10 +31,9 @@ All requirements are listed in `requirements.txt`
 - [PyTorch](https://pytorch.org/) with CUDA >= 1.10.0 ([onnx-pytorch](https://github.com/fumihwh/onnx-pytorch) requirement; for [TorchDeepDanbooru](https://github.com/AUTOMATIC1111/TorchDeepDanbooru))  
 PyTorch version mostly depends on [transformers](https://github.com/huggingface/transformers), please follow [the instruction to install transformers](https://github.com/huggingface/transformers#installation) if install specific version manually.
 
-- [ONNX runtime](https://onnxruntime.ai/) (to use wd-taggers by SmilingWolf, maybe installed automatically)
-
 If you want to use DirectML, please install manually in venv  (install [pytorch-directml](https://pypi.org/project/pytorch-directml/) to enable, **not tested**).
 
+This script will install [ONNX runtime](https://onnxruntime.ai/) **automatically** in `venv` before using wd-taggers by SmilingWolf.
 
 ## Installation
 ### Windows
@@ -118,9 +117,9 @@ Basic workflow is as follows:
 Please note that all batch editing will be applyed **only to displayed images (=filtered images)**.
 
 ### 1. Which filter is appropriate?
-- **I want to edit all at once**  
+#### I want to edit all at once  
   No filter is required.
-- **Some images require editing**  
+#### Some images require editing    
   1. **They should / shouldn't already have same tag(s)**  
     Go to "Filter by Tags" so that the only images to be edited are displayed.
   1. **They have nothing in common**  
@@ -128,28 +127,30 @@ Please note that all batch editing will be applyed **only to displayed images (=
     Images can also be added to the filter by pushing [Enter] key.
 
 ### 2. How can I edit as I want?
-- **I want to add some new tags**
+  ![](pic/ss07.png)  
+#### I want to add some new tags  
   1. Go to "Batch Edit Captions" tab
   1. Append tags to "Edit tags" textbox
   1. Push "Apply changes to filtered images" button  
   ![](pic/ss08.png)  
   "foo" and "bar" will be added to all images displayed.
 
-- **I want to replace the tags which are common to displayed images**
+#### I want to replace the tags which are common to displayed images  
   1. Go to "Batch Edit Captions" tab
   1. Replace tags in "Edit tags" textbox
   1. Push "Apply changes to filtered images" button  
   ![](pic/ss09.png)  
   "male focus" and "solo" will be replaced with "foo" and "bar".
 
-- **I want to remove some tags**  
+#### I want to remove some tags  
   The same as replacing. Just replace the tags with "blank".  
-  Also you can use "Remove" tab in "Batch Edit Captions".
+  Also you can use "Remove" tab in "Batch Edit Captions".  
+  ![](pic/ss10.png)  
 
-- **I want to add/replace/remove tags more flexibly**
+#### I want to add/replace/remove tags more flexibly  
   1. Go to "Batch Edit Captions" tab
   2. Use "Search and Replace" with "Use regex" checked  
-  ![](pic/ss10.png)  
+  ![](pic/ss11.png)  
   "1boy", "2boys", … will be replaced with "1girl", "2girls", … in each tags of images displayed.  
   A comma will be regarded as the sepalator of two tags.  
   By using regex, you can add/replace/remove tags according to more complex conditions.
@@ -161,7 +162,7 @@ Please note that all batch editing will be applyed **only to displayed images (=
 If you want to load images from other directory than this app, you should register the directory in whitelist in the "Settings" tab, or use temporary image file (as same as the next section).  
 Input path in "Path whitelist to show images …" and save settings.  
 You can input drive name like "C:\\" (Windows).  
-![](pic/ss11.png) 
+![](pic/ss12.png) 
 
 
 ### Cannot see any image in dataset and saying "All files must contained within the Gradio python app working directory…"
@@ -171,9 +172,9 @@ Input path in "Directory to save temporary files" and check "Force using tempora
 
 
 ### So laggy when opening many images or extremely large image
-Check "Force using temporaty file to ..." and input number in "Maximum resolution of ..." in the "Settings" tab.  
+Input non-zero number in "Maximum resolution of ..." in the "Settings" tab to use smaller thumbnail for the image gallery.  
 It may not work with dataset with millions of images.  
-![](pic/ss12.png) 
+![](pic/ss13.png) 
 
 
 ### My PyTorch is working without CUDA
@@ -182,7 +183,8 @@ It may not work with dataset with millions of images.
   (example) ```pip3 install -U torch torchvision --index-url https://download.pytorch.org/whl/cu118```
   1. Remove `venv` folder
   1. Run `install.bat`
-- To install PyTorch only in venv
+- To install PyTorch only in venv  
+  `activate` venv and install PyTorch with `-U` option, or do the following things:  
   1. Open `launch_user.bat` with some text editor
   2. Change the 3rd line to `set COMMANDLINE_ARGS="--force-install-torch cu118"` (you can choose from `cu117`, `cu118`, `cu121` or `cpu`)
   3. Run `launch_user.bat`
